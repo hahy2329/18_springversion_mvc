@@ -58,7 +58,6 @@ public class SupposeDAO {
 	
 	// 4) Map 전송
 	public Map<String,Object> getProductMap() {
-		
 		Map<String,Object> productMap = new HashMap<String, Object>();
 		
 		//ProductDTO property
@@ -80,7 +79,8 @@ public class SupposeDAO {
 
 		return productMap;
 
-	}
+	}	
+	
 
 	
 	// 5) Map List 전송
