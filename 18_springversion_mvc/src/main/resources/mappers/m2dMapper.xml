@@ -7,7 +7,7 @@
 	
 	<!-- DTO List 반환 예시1 -->
 	
-	<select id="ex01" resultType="com.spring.mvc.dto.ProductDTO">
+	<select id="ex01" resultType="ProductDTO">
 		SELECT 
 			*
 		FROM 
@@ -15,21 +15,223 @@
 	</select>
 	
 	<!-- DTO List 반환 예시2 -->
-
+	<select id="ex02" resultType="BrandDTO">
+		
+		SELECT 
+				*
+		FROM
+				BRAND
+	
+	
+	
+	</select>
+	
+	
+	
 
 	<!-- DTO 반환 예시1 -->
+	
+	<select id="ex03" resultType="ProductDTO">
+		
+		SELECT
+				*
+		FROM 
+				PRODUCT
+		WHERE
+				PRODUCT_CD = 1
+	</select>
 
+
+	
 	
 	<!-- DTO 반환 예시2 -->
 	
+	<select id="ex04" resultType="BrandDTO">
+		
+		SELECT 
+				*
+		FROM
+				BRAND
+		WHERE
+			BRAND_CD = 1
+	
+	
+	</select>
+	
+	
+	
 	
 	<!-- 단일데이터 반환 예시1 -->
-
+	<select id="ex05" resultType="int">
+		SELECT 
+			COUNT(*)
+			
+		FROM 
+			PRODUCT
+	
+	
+	</select>
+	
+	
+	
 	
 	<!-- 단일데이터 반환 예시2 -->
 
+	<select id="ex06" resultType="double">
+		SELECT 
+			AVG(PRICE)
+			
+		FROM 
+			PRODUCT
+	
+	</select>
+
 	
 	<!-- 단일데이터 반환 예시3 -->
+	
+	<select id="ex07" resultType="String">
+		SELECT 
+			PRODUCT_NM
+		FROM
+			PRODUCT
+		WHERE
+			PRODUCT_CD = 1
+	
+	</select>
+	
+	
+	<!--  
+
+	 	- SQL 내부의 특정 연산자가 (ex '>' , '<') 마이바티스 태그와 중첩되기 때문에
+	 	<![CDATA[]]>로 쿼리문을 감싸고 쿼리문을 작성한다.
+	 	     
+	-->
+	
+	<!-- <![CDATA[]]> 사용예시  -->	
+	<select id="ex08" resultType="ProductDTO">
+		<![CDATA[
+		
+			SELECT 
+				*
+			FROM
+				PRODUCT
+			WHERE
+				PRICE < 1000000
+		
+		]]>
+		
+	
+	</select>
+	
+	
+	
+	<!-- 
+	
+		예시 2)
+		 COLUMN에서 AS키워드를 작성하여 자바 DTO의 property와 바인딩시키거나 맵의 key값으로 지정한다.
+			
+		<select id = "" >
+			SELECT
+				컬럼1  AS DTO의 property 혹은 Map의 key
+				컬럼2  AS DTO의 property 혹은 Map의 key
+				컬럼3  DTO의 property 혹은 Map의 key    		< AS 키워드는 생략가능하다.
+				컬럼4  DTO의 property 혹은 Map의 key   
+			FROM
+				테이블명		
+		</select> 
+	 
+	-->
+	
+	<!-- 테이블 컬럼과 자바 프로퍼티 바인딩 예시1 -->
+	
+	
+	<select id="ex09" resultType="hashmap">
+		SELECT 
+			PRODUCT_CD AS productCd,
+			PRICE AS price,
+			PRICE * 0.1 AS tax,
+			PRICE + PRICE * 0.1 AS totalPrice
+		FROM
+			PRODUCT
+	</select>
+	
+
+	<!--  
+	
+		예시 3) resultMap태그를 추가로 작성한다.
+		
+		<resultMap id="getProduct" type="000.000.000.Product">  		<< 식별id	, POJO클래스 전체 경로
+       		<result property="productCode" column="PRODUCT_CODE"/>		<< 변수값   , 컬럼명
+       		<result property="productName" column="PRODUCT_NAME"/>
+    	</resultMap>
+    	
+    	<select id = ""  resultMap="getProduct">						<< 식별id , resultMap의 id
+    		SELECT
+				PRODUCT_CODE
+				PRODUCT_NAME
+			FROM
+				PRODUCT		
+    	</select>
+
+		- resultMap은 resultMap의 id와 매핑된다.
+	-->
+	
+	<resultMap type="hashmap" id="productMap">
+		<result column="PRODUCT_CD" property="productCd"/>
+		<result column="PRICE" property="price"/>
+		<result column="TAX" property="tax"/>
+		<result column="TOTAL_PRICE" property="totalPrice"/>
+		
+		
+	<!--위의 type은 해쉬맵을 쓰겠다. 위의 id와 밑의 resultMap을 연결고리 -->
+	
+	</resultMap>
+	<!-- 테이블 컬럼과 자바 프로퍼티 바인딩 예시2 -->
+	<select id="ex10" resultMap="productMap">
+		SELECT 
+			PRODUCT_CD AS PRODUCT_CD,
+			PRICE AS PRICE,
+			PRICE * 0.1 AS TAX,
+			PRICE + PRICE * 0.1 AS TOTAL_PRICE
+		FROM
+			PRODUCT
+	</select>
+	
+	
+	
+	<resultMap type="hashmap" id="joinMap">
+		
+		<result column="PRODUCT_CD" property="productCd"/>
+		<result column="PRODUCT_NM" property="productNm"/>
+		<result column="BRAND_CD" property="brandCd"/>
+		<result column="BRAND_NM" property="brandNm"/>
+		<result column="ACTIVE_YN" property="activeYn"/>
+	
+	
+	</resultMap>
+	
+	
+	
+	<!-- 테이블 컬럼과 자바 프로퍼티 바인딩 예시3 -->
+	<select id="ex11" resultMap="joinMap">
+		SELECT 
+			P.PRODUCT_CD    AS PRODUCT_CD,
+			P.PRODUCT_NM	AS PRODUCT_NM,
+			B.BRAND_CD		AS BRAND_CD,
+			B.BRAND_NM		AS BRAND_NM,
+			B.ACTIVE_YN		AS ACTIVE_YN
+		FROM
+			PRODUCT P 
+			
+			INNER JOIN BRAND B 
+				ON P.BRAND_CD = B.BRAND_CD
+	
+	</select>
+	
+	
+	
+	
+	
 
 
 
