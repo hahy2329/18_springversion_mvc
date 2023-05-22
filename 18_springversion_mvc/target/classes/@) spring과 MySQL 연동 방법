@@ -72,7 +72,7 @@
 		<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache"> 
 			<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" /> 
 		</bean>  
-	
+		</beans>
 	
 3. DB연동 관련 파일들을 생성한다. (주의 : 반드시 root-context.xml파일에 명시된대로 파일들이 위치에 있어야 한다.)
 	

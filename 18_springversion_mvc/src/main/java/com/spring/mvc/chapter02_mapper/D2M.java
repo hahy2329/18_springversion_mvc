@@ -1,6 +1,7 @@
 package com.spring.mvc.chapter02_mapper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -70,6 +71,8 @@ public class D2M {
 		brandDTO.setBrandNm("추가된브랜드");
 		brandDTO.setActiveYn("N");
 		
+		sqlSession.insert("d2m.sample04", brandDTO);
+		
 	}
 	
 	// DTO 전송 예시2
@@ -82,6 +85,7 @@ public class D2M {
 		productDTO.setPrice(1);
 		productDTO.setDeliveryPrice(1);
 		productDTO.setBrandCd("add");
+		sqlSession.insert("d2m.sample05", productDTO);
 		
 	}
 	
@@ -94,6 +98,11 @@ public class D2M {
 		productDTO.setPrice(1000000);
 		productDTO.setDeliveryPrice(3000);
 		
+		List<ProductDTO> productList = sqlSession.selectList("d2m.sample06", productDTO);
+		for(ProductDTO productDTO2 : productList) {
+			System.out.println(productDTO2);
+		}
+		
 	}
 	
 	// Map 전송 예시1
@@ -104,7 +113,10 @@ public class D2M {
 		Map<String, Integer> priceMap = new HashMap<String, Integer>();
 		priceMap.put("min", 500000);
 		priceMap.put("max", 1000000);
-		
+		List<ProductDTO> productList = sqlSession.selectList("d2m.sample07", priceMap);
+		for(ProductDTO productDTO : productList) {
+			System.out.println(productDTO);
+		}
 	}
 	
 	
@@ -116,7 +128,10 @@ public class D2M {
 		Map<String, String> dateMap = new HashMap<String, String>();
 		dateMap.put("startDate","2021-01-01");
 		dateMap.put("endDate", "2021-03-31");
-		
+		List<BrandDTO> brandList =sqlSession.selectList("d2m.sample08", dateMap);
+		for(BrandDTO brandDTO : brandList) {
+			System.out.println(brandDTO);
+		}
 	}
 	
 	// Map 전송 예시3
@@ -128,6 +143,10 @@ public class D2M {
 		searchMap.put("activeYn","N");
 		searchMap.put("price", 1000000);
 		
+		List<Map<String, Object>> searchMapList =  sqlSession.selectList("d2m.sample09", searchMap);
+		for(Map<String, Object> map : searchMapList) {
+			System.out.println(map);
+		}
 	}
 	
 	

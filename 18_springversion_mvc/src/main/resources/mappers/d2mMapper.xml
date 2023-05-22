@@ -69,17 +69,111 @@
 	</select>
 
 	<!-- DTO 전송예시1 -->
+	<insert id="sample04" parameterType="BrandDTO">
+		INSERT INTO
+				BRAND
+		VALUES(
+		
+			#{brandCd}, #{brandNm}, NOW(), #{activeYn}
+		
+		<!-- BrandDTO의 멤버변수로 적어줘야한다. -->
+		)
+		
+		
+	
+	
+	</insert>
+	
+	
 
 	<!-- DTO 전송예시2 -->
+	<insert id="sample05" parameterType="ProductDTO">
+		
+		INSERT INTO 
+				PRODUCT(
+			PRODUCT_NM,
+			PRICE,
+			DELIVERY_PRICE,
+			ENROLL_DT,
+			BRAND_CD		
+				
+		)
+		VALUES(
+			#{productNm},
+			#{price},
+			#{deliveryPrice},
+			NOW(),
+			#{brandCd}
+		
+		)
+			
+	
+	</insert>
+	
 
 	<!-- DTO 전송예시3 -->
 	
+	<select id="sample06" parameterType="ProductDTO" resultType="ProductDTO">
+		SELECT 
+				*
+		FROM
+				PRODUCT
+		WHERE
+				PRICE > #{price}
+				
+		AND 
+				DELIVERY_PRICE = #{deliveryPrice}		
+	
+	</select>
+	
+	
+	
+	
 	
 	<!-- Map 전송예시1 -->
+	<select id="sample07" parameterType="hashmap" resultType="ProductDTO">
+	
+		SELECT 
+			*
+		FROM 
+			PRODUCT
+		WHERE 
+			PRICE BETWEEN #{min} AND #{max}
+		
+	
+	
+	</select>
 	
 	<!-- Map 전송예시2 -->
+	<select id="sample08" parameterType="hashmap" resultType="BrandDTO">
+		SELECT 
+			*
+		FROM 
+			BRAND
+		WHERE 
+			ENTERED_DT BETWEEN #{startDate} AND #{endDate}
+		
+	
+	</select>
+	
 	
 	<!-- Map 전송예시3 -->
+	
+	<select id="sample09" parameterType="hashmap" resultType="hashmap">
+		SELECT 
+			*
+		FROM 
+			PRODUCT P 
+			INNER JOIN BRAND B 
+					ON P.BRAND_CD = B.BRAND_CD
+		WHERE 
+			P.PRICE >= #{price}
+		AND 
+			B.ACTIVE_YN = #{activeYn} 
+			
+		
+	
+	</select>
 	
 
 </mapper>

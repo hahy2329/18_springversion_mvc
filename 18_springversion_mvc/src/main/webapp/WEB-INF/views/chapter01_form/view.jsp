@@ -19,7 +19,7 @@
 	<p>productNm : ${productDTO.productNm }</p>
 	<p>price : <fmt:formatNumber value="${productDTO.price }"/></p>
 	<p>deliveryPrice : <fmt:formatNumber value="${productDTO.deliveryPrice }"/></p>
-	<p>enrollDt : <fmt:formatNumber value="${productDTO.enrollDt }" pattern="yyyy-MM-dd"/></p>
+	<p>enrollDt : <fmt:formatDate value="${productDTO.enrollDt }" pattern="yyyy-MM-dd"/></p>
 	<p>brandCd : ${productDTO.brandCd }</p>
 	<hr>
 	

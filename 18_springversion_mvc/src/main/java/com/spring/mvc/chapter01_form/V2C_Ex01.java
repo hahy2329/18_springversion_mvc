@@ -6,18 +6,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.mvc.dto.ProductDTO;
 
 @Controller
+@RequestMapping("/v2c")
 public class V2C_Ex01 {
 
 	@GetMapping("/input")
 	public String input() {	
 		return "chapter01_form/input"; 
 	}
-	// 1) 2) 한방 처리 
+
 	/*
 	 * 
 	 *  1) @ModelAttribute
@@ -30,9 +32,11 @@ public class V2C_Ex01 {
 	 *   
 	 *  - String to Date 데이터 형식의 바인딩은 DTO클래스 property위에 @DateTimeFormat(pattern = "yyyy-MM-dd")을 추가하여 매핑한다.
 	 */
+	
 	@PostMapping("/modelAttribute")
 	//public String modelAttribute(ProductDTO productDTO) {
 	public String modelAttribute(@ModelAttribute ProductDTO productDTO) {
+		
 		System.out.println("\n ModelAttribute \n");
 		System.out.println(productDTO);
 		System.out.println();
@@ -58,12 +62,13 @@ public class V2C_Ex01 {
 	
 	@PostMapping("/map")
 	public String map(@RequestParam Map<String, Object> productMap) {
-		System.out.println("\n @RequestParam map \n");
+		
+		System.out.println("\n @Requestparam map \n");
 		System.out.println(productMap);
 		System.out.println();
 		
 		return "chapter01_form/input";
+		
 	}
-	
 	
 }

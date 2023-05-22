@@ -1,14 +1,18 @@
 package com.spring.mvc.chapter01_form;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
+@RequestMapping("/c2v") //중복되는 경로는 Controller위에 선언하여 코드의 중복을 줄일 수 있다.
 public class C2V_Ex02 {
 
 	/*
@@ -21,13 +25,15 @@ public class C2V_Ex02 {
 	 */
 	
 	@GetMapping("/responseBodyEx")
-	@ResponseBody //선언 순간 return 문은 데이터로 바뀜. //선언 안하면 return문은 다시 경로로 바뀜
-	public String responseBodyEx() {
+	@ResponseBody 
+	public String responseBodyEx(HttpServletRequest request) {
 		
-		String jsScript ="<script>";
-		jsScript +="alert('send message');";
-		jsScript +="location.href='requestEx';";
-		jsScript +="</script>";
+		String jsScript = "<script>";
+			   jsScript += "alert('send message');";
+			   //jsScript += "location.href='requestEx';";
+			   // request.getContextPath(); 메서드를 사용하여 프로젝트(3level 패키지)경로를 가져온다.
+			   jsScript += "location.href='" + request.getContextPath() + "/c2v/requestEx';";
+			   jsScript += "</script>";
 		
 		return jsScript;
 		
@@ -57,14 +63,15 @@ public class C2V_Ex02 {
 	 * 
 	 */
 	@GetMapping("/responseEntityEx")
-	public ResponseEntity<Object> responseEntityEx() {
+	public ResponseEntity<Object> responseEntityEx(HttpServletRequest request) {
 		
 		//1)
 		//return new ResponseEntity<Object>(HttpStatus.OK);
 		
-		String jsScript =  "<script>";
+		String jsScript = "<script>";
 			   jsScript += "alert('확인되었습니다.');";
-			   jsScript += "location.href='requestEx';";
+			   //jsScript += "location.href='requestEx';";
+			   jsScript += "location.href='" + request.getContextPath() + "/c2v/requestEx';";
 			   jsScript += "</script>";
 		//2)
 		//return new ResponseEntity<Object>(jsScript , HttpStatus.OK);
@@ -91,15 +98,15 @@ public class C2V_Ex02 {
  *
  */
 
-@RestController // 선언 순간 jsp로 갈 생각이 없기에 데이터로만 인식
+@RestController
 class RestControllerEx {
 	
 	@GetMapping("/restControllerEx")
-	public String restControllerEx() {
+	public String restControllerEx(HttpServletRequest request) {
 		
 		String jsScript = "<script>";
 			   jsScript += "alert('send message');";
-			   jsScript += "location.href='requestEx';";
+			   jsScript += "location.href='"+request.getContextPath()+"/c2v/requestEx';";
 			   jsScript += "</script>";
 		
 		return jsScript;
