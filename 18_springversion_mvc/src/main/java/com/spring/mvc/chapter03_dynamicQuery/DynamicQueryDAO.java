@@ -75,7 +75,7 @@ public class DynamicQueryDAO {
 	// foreach 사용 예시1
 	public void foreachEx01() {
 		
-		System.out.println("\n --- foreachEx01 --- \n");
+		
 		System.out.println("\n --- foreachEx01 --- \n");
 		
 		List<BrandDTO> brandList = new ArrayList<BrandDTO>();
@@ -89,6 +89,7 @@ public class DynamicQueryDAO {
 			brandDTO.setActiveYn("Y");
 			
 			brandList.add(brandDTO);
+			
 		}
 		
 		sqlSession.insert("dynamicQuery.foreachEx01" , brandList);
