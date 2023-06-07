@@ -71,4 +71,21 @@ public class V2C_Ex01 {
 		
 	}
 	
+	
+	//참고 DTO List전송
+	@PostMapping("/DTOList")
+	public String DTOList(@ModelAttribute ProductDTO productDTO) {
+		
+		System.out.println("\n DTO \n");
+		System.out.println(productDTO.getProductList());
+		System.out.println();
+		
+		for (ProductDTO dto : productDTO.getProductList()) {
+			System.out.println(dto);
+		}
+		
+		return "chapter01_form/input";
+		
+	}
+	
 }
