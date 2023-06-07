@@ -81,6 +81,39 @@
 	<p><a href="${contextPath }/v2c/pathVariable/1/3">구매하기(@PathVariable)</a></p>
 	
 	<br><hr><br>
+    
+    <h1>참조) DTO List 전송</h1>
+	<form action="${contextPath }/v2c/DTOList" method="post"> 
+		<table border="1">
+			<tr align="center">
+				<th>productCd</th>
+				<th>productNm</th>
+				<th>price</th>
+				<th>deliveryPrice</th>
+				<th>enrollDt</th>
+				<th>brandCd</th>
+			</tr>
+			<c:forEach var="i" begin="0" end="9">
+				<tr>
+					<td><input type="text" name="productList[${i }].productCd" value="${i}"/></td>
+					<td><input type="text" name="productList[${i}].productNm" value="${i} 상품이름"/></td>
+					<td><input type="text" name="productList[${i}].price" value="${i * 10000}"/></td>
+					<td><input type="text" name="productList[${i}].deliveryPrice" value="3000"/></td>
+					<td><input type="date" name="productList[${i }].enrollDt" value="2021-01-07"/></td>
+					<td><select name="productList[${i }].brandCd">
+							<option value="b1">SAMSUNG</option>
+							<option value="b2">LG</option>
+							<option value="b3">APPLE</option>
+							<option value="b4">LENOVO</option>
+							<option value="b5">GIGABYTE</option>
+							<option value="b6">HP</option>
+						</select>
+					</td>
+				</tr>
+			</c:forEach>
+			<tr><td colspan="6"><input type="submit"></td></tr>
+		</table>
+	</form>
      
 </body>
 </html>
