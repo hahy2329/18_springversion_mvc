@@ -81,7 +81,7 @@ public class AjaxToController {
 		String json = paramList.get("paramList").toString();
 		  
 		// 2) 변환된 데이터를 List타입으로 저장한다.
-		//JSON 파일을 Java 객체로 deserialization 하기 위해서 ObjectMapper의 readValue() 메서드를 이용한다.
+		//JSON 파일을 Java 객체로 deserialization(역직렬화 = 객체형태로 만듬) 하기 위해서 ObjectMapper의 readValue() 메서드를 이용한다.
 		
 		ObjectMapper  mapper = new ObjectMapper();
 		List<ProductDTO> productList = mapper.readValue(json, new TypeReference<ArrayList<ProductDTO>>(){});
